@@ -12,9 +12,33 @@ int main(int argc, char** argv)
 		SDL_WINDOW_SHOWN		// for the flag
 	);
 	
-	while (1) {}
-	
-	printf("Hello world!\n");
-	SDL_DestroyWindow(window); 
-	return 0;
+
+	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_TEXTUREACCESS_TARGET);
+
+	while (1)
+	{
+		SDL_Event event;
+		while (SDL_PollEvent(&event))
+		{
+			if (event.type == SDL_QUIT)
+			{
+				goto out;
+			}
+		}
+
+
+		SDL_SetRenderDrawColor(renderer, 0,0,0,0); // all render functions rely on this color
+		SDL_RenderClear(renderer);
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255,0);
+		SDL_Rect r;
+		r.x = 0;
+		r.y = 0;
+		r.w = 40;
+		r.h = 40;
+		SDL_RenderFillRect(renderer, &r);
+		SDL_RenderPresent(renderer);
+	}
+	out:
+		SDL_DestroyWindow(window); 
+		return 0;
 }
