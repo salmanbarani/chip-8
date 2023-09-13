@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include "SDL2/SDL.h"
+#include "chip8.h"
 
 int main(int argc, char** argv) 
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window *window = SDL_CreateWindow(
-		"Chip8 Window",  		// Title of the window
+		EMULATOR_WINDOW_TITLE,		// Title of the window
 		SDL_WINDOWPOS_UNDEFINED,	// X position of the window 
 		SDL_WINDOWPOS_UNDEFINED,	// Y position of the window
-		640 , 320,			// Width and Heights of the window
+		CHIP8_WIDTH * CHIP8_WINDOW_MULTIPLIER,	// Width of the window 
+		CHIP8_HEIGHT * CHIP8_WINDOW_MULTIPLIER,	// Heights of the window
 		SDL_WINDOW_SHOWN		// for the flag
 	);
 	
