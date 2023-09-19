@@ -3,6 +3,7 @@
 
 #include "config.h"
 #include "chip8memory.h"
+#include "chip8registers.h"
 
 // Everyting related to chip8 goes inside the struct like memory, keyboard, and so on
 struct chip8

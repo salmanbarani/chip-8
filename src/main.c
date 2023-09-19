@@ -6,8 +6,9 @@ int main(int argc, char** argv)
 {
 
 	struct chip8 chip8;
-	chip8_memory_set(&chip8.memory, 0x400, 'S');
-	printf("%c\n", chip8_memory_get(&chip8.memory, 0x400));
+	//chip8.registers.V[0x0f] = 14;
+	//chip8_memory_set(&chip8.memory, 0x400, 'S');
+	//printf("%d\n", chip8.registers.V[0xf]);
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window *window = SDL_CreateWindow(
