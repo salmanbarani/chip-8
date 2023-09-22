@@ -8,7 +8,7 @@ static void chip8_stack_in_bound(struct chip8* chip8)
 	// No need to worry about less than zero values since it's unsgined short.
 }
 
-void chip8_stack_push(struct chip* chip8, unsigned short val)
+void chip8_stack_push(struct chip8* chip8, unsigned short val)
 {
 	chip8_stack_in_bound(chip8);
 	chip8->stack.stack[chip8->registers.SP] = val;
