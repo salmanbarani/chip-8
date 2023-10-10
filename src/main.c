@@ -16,7 +16,7 @@ int main(int argc, char** argv)
 	struct chip8 chip8;
 	chip8_init(&chip8);
 
-	//chip8_screen_set(&chip8.screen, 0, 0);
+	chip8_screen_draw_sprite(&chip8.screen, 62, 20, &chip8.memory.memory[0x00], 5);
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window *window = SDL_CreateWindow(
@@ -74,7 +74,6 @@ int main(int argc, char** argv)
 		{
 			for (int y = 0; y < CHIP8_HEIGHT; y++)
 			{
-
 				if (chip8_screen_is_set(&chip8.screen, x, y))
 				{
 					SDL_Rect r;
