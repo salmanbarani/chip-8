@@ -1,5 +1,10 @@
 #include <stdio.h>
 #include <stdbool.h>
+// If running in Windows
+#ifdef _WIN32
+#include <Windows.h>
+#endif
+#include <unistd.h>
 #include "SDL2/SDL.h"
 #include "chip8.h"
 #include "chip8keyboard.h"
@@ -10,13 +15,22 @@ const char keyboard_map[CHIP8_TOTAL_KEYS] = {
 	SDLK_c, SDLK_d, SDLK_e,  SDLK_f
 };
 
+void beep(int frequency, int duration) {
+    printf("\033[10;%d]%c", frequency, 7);  // 7 is the ASCII code for the Bell character
+    fflush(stdout);
+    usleep(duration * 1000);  // usleep is used to sleep for a specified number of microseconds
+    printf("\033[10;0]");  // Reset the terminal to default settings
+    fflush(stdout);
+}
+
 int main(int argc, char** argv) 
 {
 
 	struct chip8 chip8;
 	chip8_init(&chip8);
+	chip8.registers.sound_timer= 255;	
 
-	chip8_screen_draw_sprite(&chip8.screen, 62, 20, &chip8.memory.memory[0x00], 5);
+	chip8_screen_draw_sprite(&chip8.screen, 5 , 0, &chip8.memory.memory[0x00], 5);
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window *window = SDL_CreateWindow(
@@ -86,8 +100,27 @@ int main(int argc, char** argv)
 			}
 		}
 		SDL_RenderPresent(renderer);
+		
+
+		if (chip8.registers.delay_timer > 0)
+		{
+			printf("Delay!!!\n");
+			sleep(0.1); // sleep for 100 ms
+			chip8.registers.delay_timer -= 1;
+		}
+		
+		if (chip8.registers.sound_timer > 0)
+		{
+			// Sound
+			beep(8000, 100 ); // TODO: replace it with Beep(frequency, duration) in Windows
+			chip8.registers.sound_timer -= 1;
+		}
+
 	}
 	out:
 		SDL_DestroyWindow(window); 
 		return 0;
 }
+
+
+
