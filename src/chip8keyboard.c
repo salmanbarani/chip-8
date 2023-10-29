@@ -6,10 +6,10 @@ static void chip8_keyboard_ensure_in_bound(int key)
 	assert(key >= 0 && key < CHIP8_TOTAL_KEYS);
 }
 
-int chip8_keyboard_map(const char* map, char key)
+int chip8_keyboard_map(struct chip8_keyboard* keyboard, char key)
 {
 	for (int i = 0; i < CHIP8_TOTAL_KEYS; i++)
-		if (map[i] == key)
+		if (keyboard->keyboard_map[i] == key)
 			return i;
 	return -1; // Means the key wasn't found.
 }
